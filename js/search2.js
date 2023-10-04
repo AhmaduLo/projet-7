@@ -9,23 +9,15 @@ inputSearch.addEventListener("input", (e) => {
   const containerAll = document.querySelectorAll(".containerAll");
   Filter(valueInput, containerAll);
 });
-
 function Filter(valueInput, containerAll) {
   if (valueInput.length > 2) {
-    for (let i = 0; i < containerAll.length; i++) {
-      if (containerAll[i].textContent.toLowerCase().includes(valueInput)) {
-        containerAll[i].style.display = "block";
+    containerAll.forEach((item) => {
+      if (item.textContent.toLowerCase().includes(valueInput)) {
+        item.style.display = "block";
       } else {
-        containerAll[i].style.display = "none";
+        item.style.display = "none";
       }
-    }
-    for (let i = 0; i < elementsPara1.length; i++) {
-      if (elementsPara1[i].textContent.toLowerCase().includes(valueInput)) {
-        elementsPara1[i].style.display = "block";
-      } else {
-        elementsPara1[i].style.display = "none";
-      }
-    }
+    });
   } else if (valueInput.length == 0) {
     location.reload();
   }
@@ -47,7 +39,7 @@ function recherche(valueInput, item) {
     } else {
       item.style.display = "none";
     }
-  }else {
+  } else {
     item.style.display = "block";
   }
 }
