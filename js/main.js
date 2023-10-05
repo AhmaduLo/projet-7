@@ -279,7 +279,7 @@ fetch("http://127.0.0.1:5500/data/recipes.json").then((res) => {
                 siblingElement.remove();
                 let siblingElementText =
                   e.target.parentElement.firstChild.nextSibling.textContent;
-                section.innerHTML = "";
+                //section.innerHTML = "";
                 //------------les id qu'on doit delete----------------
                 let IdYToDelete = [];
                 const result = ArrayRecipes.filter((item) => {
@@ -293,105 +293,216 @@ fetch("http://127.0.0.1:5500/data/recipes.json").then((res) => {
                 });
                 IdYToDelete.forEach((IdYToDeleteUss) => {
                   AllIdtoDisplays.pop(IdYToDeleteUss);
-                  duplicateElementa.filter((item) => {
-                    if (IdYToDeleteUss == item) {
-                      duplicateElementa.pop(IdYToDeleteUss);
-                      if (duplicateElementa == "") {
-                        for (i = 0; i < recipes.length; i++) {
-                          let ingredient = recipes[i].ingredients;
-                          let textIngre = "";
+                  if (afficheClickIng.children.length == 1) {
+                    section.innerHTML = "";
+                    console.log(AllIdtoDisplays);
+                    for (i = 0; i < recipes.length; i++) {
+                      let ingredient = recipes[i].ingredients;
+                      let textIngre = "";
 
-                          ingredient.forEach((ingred) => {
-                            textIngre =
-                              textIngre + " " + ingred.ingredient + "    :";
+                      ingredient.forEach((ingred) => {
+                        textIngre =
+                          textIngre + " " + ingred.ingredient + "    :";
 
-                            if (ingred.quantity != undefined) {
-                              textIngre = textIngre + "" + ingred.quantity;
-                            }
-                            if (ingred.unit != undefined) {
-                              textIngre =
-                                textIngre + " " + ingred.unit + "<br/>";
-                            }
-                          });
-                          if (AllIdtoDisplays.includes(recipes[i].id)) {
-                            section.innerHTML += `
-                                        <div class="containerAll">
-                                            <div class="imgNone"></div>
-                                            <div class="lesInfos">
-                                                <div class="tittle_time">
-                                                    <div class="tittle">
-                                                        <h3>${recipes[i].name}</h3>
-                                                    </div>
-                                                    <div class="time">
-                                                        <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                                        <p>${recipes[i].time} min</p>
-                                                    </div>
-                                  
-                                                </div>
-                                  
-                                                <div class="ingredient_demo">
-                                                    <div class="ingredient"> 
-                                                      <p> ${textIngre} </p>  
-                                                    </div>
-                                                    <div class="demo">
-                                                    ${recipes[i].description}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        `;
-                          }
+                        if (ingred.quantity != undefined) {
+                          textIngre = textIngre + "" + ingred.quantity;
                         }
-                      } else if (duplicateElementa != "") {
-                        for (i = 0; i < recipes.length; i++) {
-                          let ingredient = recipes[i].ingredients;
-                          let textIngre = "";
-
-                          ingredient.forEach((ingred) => {
-                            textIngre =
-                              textIngre + " " + ingred.ingredient + "    :";
-
-                            if (ingred.quantity != undefined) {
-                              textIngre = textIngre + "" + ingred.quantity;
-                            }
-                            if (ingred.unit != undefined) {
-                              textIngre =
-                                textIngre + " " + ingred.unit + "<br/>";
-                            }
-                          });
-                          if (duplicateElementa.includes(recipes[i].id)) {
-                            section.innerHTML += `
-                                        <div class="containerAll">
-                                            <div class="imgNone"></div>
-                                            <div class="lesInfos">
-                                                <div class="tittle_time">
-                                                    <div class="tittle">
-                                                        <h3>${recipes[i].name}</h3>
-                                                    </div>
-                                                    <div class="time">
-                                                        <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                                        <p>${recipes[i].time} min</p>
-                                                    </div>
-                                  
-                                                </div>
-                                  
-                                                <div class="ingredient_demo">
-                                                    <div class="ingredient"> 
-                                                      <p> ${textIngre} </p>  
-                                                    </div>
-                                                    <div class="demo">
-                                                    ${recipes[i].description}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        `;
-                          }
+                        if (ingred.unit != undefined) {
+                          textIngre = textIngre + " " + ingred.unit + "<br/>";
                         }
+                      });
+                      if (AllIdtoDisplays.includes(recipes[i].id)) {
+                        section.innerHTML += `
+                                  <div class="containerAll">
+                                      <div class="imgNone"></div>
+                                      <div class="lesInfos">
+                                          <div class="tittle_time">
+                                              <div class="tittle">
+                                                  <h3>${recipes[i].name}</h3>
+                                              </div>
+                                              <div class="time">
+                                                  <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                  <p>${recipes[i].time} min</p>
+                                              </div>
+                            
+                                          </div>
+                            
+                                          <div class="ingredient_demo">
+                                              <div class="ingredient"> 
+                                                <p> ${textIngre} </p>  
+                                              </div>
+                                              <div class="demo">
+                                  ${recipes[i].description}
+                                </div>
+                             </div>
+                           </div>
+                         </div>
+                     `;
                       }
                     }
-                  });
+                  }
+                  //----function DisplayduplicateElementaAfterDelete---------
+                  function DisplayduplicateElementaAfterDelete() {
+                    duplicateElementa.filter((item) => {
+                      if (IdYToDeleteUss == item) {
+                        duplicateElementa.pop(IdYToDeleteUss);
+                        console.log(duplicateElementa);
+                        if (afficheClickIng.children.length > 1) {
+                          section.innerHTML = "";
+                          for (i = 0; i < recipes.length; i++) {
+                            let ingredient = recipes[i].ingredients;
+                            let textIngre = "";
 
+                            ingredient.forEach((ingred) => {
+                              textIngre =
+                                textIngre + " " + ingred.ingredient + "    :";
+
+                              if (ingred.quantity != undefined) {
+                                textIngre = textIngre + "" + ingred.quantity;
+                              }
+                              if (ingred.unit != undefined) {
+                                textIngre =
+                                  textIngre + " " + ingred.unit + "<br/>";
+                              }
+                            });
+
+                            if (duplicateElementa.includes(recipes[i].id)) {
+                              section.innerHTML += `
+                                        <div class="containerAll">
+                                            <div class="imgNone"></div>
+                                            <div class="lesInfos">
+                                                <div class="tittle_time">
+                                                    <div class="tittle">
+                                                        <h3>${recipes[i].name}</h3>
+                                                    </div>
+                                                    <div class="time">
+                                                        <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                        <p>${recipes[i].time} min</p>
+                                                    </div>
+                                  
+                                                </div>
+                                  
+                                                <div class="ingredient_demo">
+                                                    <div class="ingredient"> 
+                                                      <p> ${textIngre} </p>  
+                                                    </div>
+                                                    <div class="demo">
+                                        ${recipes[i].description}
+                                      </div>
+                                   </div>
+                                 </div>
+                               </div>
+                           `;
+                            }
+                          }
+                        }
+                        //else {
+                        //   AllIdtoDisplays.pop(IdYToDeleteUss);
+                        //   // console.log(AllIdtoDisplays);
+                        //   for (i = 0; i < recipes.length; i++) {
+                        //     let ingredient = recipes[i].ingredients;
+                        //     let textIngre = "";
+
+                        //     ingredient.forEach((ingred) => {
+                        //       textIngre =
+                        //         textIngre + " " + ingred.ingredient + "    :";
+
+                        //       if (ingred.quantity != undefined) {
+                        //         textIngre = textIngre + "" + ingred.quantity;
+                        //       }
+                        //       if (ingred.unit != undefined) {
+                        //         textIngre =
+                        //           textIngre + " " + ingred.unit + "<br/>";
+                        //       }
+                        //     });
+                        //     if (AllIdtoDisplays.includes(recipes[i].id)) {
+                        //       section.innerHTML += `
+                        //                 <div class="containerAll">
+                        //                     <div class="imgNone"></div>
+                        //                     <div class="lesInfos">
+                        //                         <div class="tittle_time">
+                        //                             <div class="tittle">
+                        //                                 <h3>${recipes[i].name}</h3>
+                        //                             </div>
+                        //                             <div class="time">
+                        //                                 <i class="fa fa-clock-o" aria-hidden="true"></i>
+                        //                                 <p>${recipes[i].time} min</p>
+                        //                             </div>
+
+                        //                         </div>
+
+                        //                         <div class="ingredient_demo">
+                        //                             <div class="ingredient">
+                        //                               <p> ${textIngre} </p>
+                        //                             </div>
+                        //                             <div class="demo">
+                        //                             ${recipes[i].description}
+                        //                             </div>
+                        //                         </div>
+                        //                     </div>
+                        //                 </div>
+                        //                 `;
+                        //     }
+                        //   }
+                        // }
+                      }
+                    });
+                  }
+                  //----function DisplayAllIdtoDisplaysAfterDelete---------
+                  // function DisplayAllIdtoDisplaysAfterDelete() {
+                  // if (afficheClickIng.children.length == 1) {
+                  //   AllIdtoDisplays.pop(IdYToDeleteUss);
+                  //   section.innerHTML = "";
+                  //   console.log(AllIdtoDisplays);
+                  //   for (i = 0; i < recipes.length; i++) {
+                  //     let ingredient = recipes[i].ingredients;
+                  //     let textIngre = "";
+
+                  //     ingredient.forEach((ingred) => {
+                  //       textIngre =
+                  //         textIngre + " " + ingred.ingredient + "    :";
+
+                  //       if (ingred.quantity != undefined) {
+                  //         textIngre = textIngre + "" + ingred.quantity;
+                  //       }
+                  //       if (ingred.unit != undefined) {
+                  //         textIngre = textIngre + " " + ingred.unit + "<br/>";
+                  //       }
+                  //     });
+                  //     if (AllIdtoDisplays.includes(recipes[i].id)) {
+                  //       section.innerHTML += `
+                  //                 <div class="containerAll">
+                  //                     <div class="imgNone"></div>
+                  //                     <div class="lesInfos">
+                  //                         <div class="tittle_time">
+                  //                             <div class="tittle">
+                  //                                 <h3>${recipes[i].name}</h3>
+                  //                             </div>
+                  //                             <div class="time">
+                  //                                 <i class="fa fa-clock-o" aria-hidden="true"></i>
+                  //                                 <p>${recipes[i].time} min</p>
+                  //                             </div>
+
+                  //                         </div>
+
+                  //                         <div class="ingredient_demo">
+                  //                             <div class="ingredient">
+                  //                               <p> ${textIngre} </p>
+                  //                             </div>
+                  //                             <div class="demo">
+                  //                 ${recipes[i].description}
+                  //               </div>
+                  //            </div>
+                  //          </div>
+                  //        </div>
+                  //    `;
+                  //     }
+                  //   }
+                  // }
+                  //  }
+
+                  DisplayduplicateElementaAfterDelete();
+                  // DisplayAllIdtoDisplaysAfterDelete();
                   if (AllIdtoDisplays == "") {
                     return newFuntion();
                   }
