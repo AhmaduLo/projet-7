@@ -1,5 +1,7 @@
 const inputSearch = document.querySelector(".inputSearch");
 const InputShe = document.querySelectorAll(".InputShe");
+const InputShe2 = document.querySelectorAll(".InputShe2");
+const InputShe3 = document.querySelectorAll(".InputShe3");
 const containerInfo = document.querySelectorAll(".containt_info");
 
 //------------------barre de recherche superieur--------------------------
@@ -19,11 +21,28 @@ function Filter(valueInput, containerAll) {
         containerAll[i].style.display = "none";
       }
     }
+    //--------para1-------------------
     for (let i = 0; i < elementsPara1.length; i++) {
       if (elementsPara1[i].textContent.toLowerCase().includes(valueInput)) {
         elementsPara1[i].style.display = "block";
       } else {
         elementsPara1[i].style.display = "none";
+      }
+    }
+    //--------para2-------------------
+    for (let i = 0; i < elementsPara2.length; i++) {
+      if (elementsPara2[i].textContent.toLowerCase().includes(valueInput)) {
+        elementsPara2[i].style.display = "block";
+      } else {
+        elementsPara2[i].style.display = "none";
+      }
+    }
+    //--------para3-------------------
+    for (let i = 0; i < elementsPara3.length; i++) {
+      if (elementsPara3[i].textContent.toLowerCase().includes(valueInput)) {
+        elementsPara3[i].style.display = "block";
+      } else {
+        elementsPara3[i].style.display = "none";
       }
     }
   } else if (valueInput.length == 0) {
@@ -40,6 +59,27 @@ InputShe.forEach((InputShee) => {
     });
   });
 });
+
+//--------2---------------
+InputShe2.forEach((InputShee) => {
+  InputShee.addEventListener("input", (e) => {
+    const valueInput = e.target.value;
+
+    elementsPara2.map((item2) => {
+      recherche2(valueInput, item2);
+    });
+  });
+});
+//----------------3------------
+InputShe3.forEach((InputShee) => {
+  InputShee.addEventListener("input", (e) => {
+    const valueInput = e.target.value;
+
+    elementsPara3.map((item3) => {
+      recherche2(valueInput, item3);
+    });
+  });
+});
 function recherche(valueInput, item) {
   if (valueInput.length > 2) {
     if (item.textContent.toLowerCase().includes(valueInput)) {
@@ -47,7 +87,31 @@ function recherche(valueInput, item) {
     } else {
       item.style.display = "none";
     }
-  }else {
+  } else {
     item.style.display = "block";
+  }
+}
+//-------------------------------------------------
+function recherche2(valueInput, item2) {
+  if (valueInput.length > 2) {
+    if (item2.textContent.toLowerCase().includes(valueInput)) {
+      item2.style.display = "block";
+    } else {
+      item2.style.display = "none";
+    }
+  } else {
+    item2.style.display = "block";
+  }
+}
+//-------------------------------------------------
+function recherche3(valueInput, item3) {
+  if (valueInput.length > 2) {
+    if (item3.textContent.toLowerCase().includes(valueInput)) {
+      item3.style.display = "block";
+    } else {
+      item3.style.display = "none";
+    }
+  } else {
+    item3.style.display = "block";
   }
 }

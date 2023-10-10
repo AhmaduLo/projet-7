@@ -39,7 +39,7 @@ fetch("http://127.0.0.1:5500/data/recipes.json").then(function (res) {
         for (i = 0; i < recipes.length; i++) {
           _loop();
         }
-      } //----------------function-----extraireIngredien----------------------------
+      } //----------------function-extraireIngredien----------------------------
 
 
       function extraireIngredien() {

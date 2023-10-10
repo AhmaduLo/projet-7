@@ -52,7 +52,7 @@ fetch("http://127.0.0.1:5500/data/recipes.json").then((res) => {
       `;
         }
       }
-      //----------------function-----extraireIngredien----------------------------
+      //----------------function-extraireIngredien----------------------------
       function extraireIngredien() {
         for (i = 0; i < recipes.length; i++) {
           let ArrayApareilSpecifique = [];
