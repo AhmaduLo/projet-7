@@ -20,6 +20,30 @@ function Filter(valueInput, containerAll) {
         item.style.display = "none";
       }
     });
+    //--------para1-------------------
+    elementsPara1.forEach((item1) => {
+      if (item1.textContent.toLowerCase().includes(valueInput)) {
+        item1.style.display = "block";
+      } else {
+        item1.style.display = "none";
+      }
+    });
+    //--------para2-------------------
+    elementsPara2.forEach((item1) => {
+      if (item1.textContent.toLowerCase().includes(valueInput)) {
+        item1.style.display = "block";
+      } else {
+        item1.style.display = "none";
+      }
+    });
+    //--------para3-------------------
+    elementsPara3.forEach((item1) => {
+      if (item1.textContent.toLowerCase().includes(valueInput)) {
+        item1.style.display = "block";
+      } else {
+        item1.style.display = "none";
+      }
+    });
   } else if (valueInput.length == 0) {
     location.reload();
   }
