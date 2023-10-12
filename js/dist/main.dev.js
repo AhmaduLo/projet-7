@@ -49,115 +49,236 @@ var elementsPara1 = [];
 var elementsPara2 = [];
 var elementsPara3 = [];
 var AllIdtoDisplays = [];
-var result = []; //-------------------------fecth ingredients----------------------------
+var result = []; //-----------------function fetch-------------------------------------
 
-fetch("http://127.0.0.1:5500/data/recipes.json").then(function (res) {
-  if (res.ok) {
-    res.json().then(function (data) {
-      var recipes = data.recipes;
-      var ArrayRecipes = [{
-        id: "X"
-      }];
-      var AllIngredient = []; //   let ArrayRecipes = [{ id: "X" }]
-      //----functiopn affiche block in html-----------
+function fetchRecipes() {
+  fetch("http://127.0.0.1:5500/data/recipes.json").then(function (res) {
+    if (res.ok) {
+      res.json().then(function (data) {
+        var recipes = data.recipes; //------array des elemznt----------------
 
-      function newFuntion() {
-        var _loop3 = function _loop3() {
-          var ingredient = recipes[i].ingredients;
-          var textIngre = "";
-          ingredient.forEach(function (ingred) {
-            textIngre = textIngre + " " + ingred.ingredient + "    :";
+        var AllIngredient = [];
+        var ArrayIngredient = [{
+          id: "X"
+        }];
+        var AllAppareil = [];
+        var ArrayAppareil = [{
+          id: "X"
+        }];
+        var AllUstensiles = [];
+        var ArrayUstensiles = [{
+          id: "X"
+        }]; //----functiopn affiche block in html-----------
 
-            if (ingred.quantity != undefined) {
-              textIngre = textIngre + "" + ingred.quantity;
-            }
+        function newFuntion() {
+          var _loop3 = function _loop3() {
+            var ingredient = recipes[i].ingredients;
+            var textIngre = "";
+            ingredient.forEach(function (ingred) {
+              textIngre = textIngre + " " + ingred.ingredient + "    :";
 
-            if (ingred.unit != undefined) {
-              textIngre = textIngre + " " + ingred.unit + "<br/>";
-            }
-          });
-          section.innerHTML += "\n      <div class=\"containerAll\">\n          <div class=\"imgNone\"></div>\n          <div class=\"lesInfos\">\n              <div class=\"tittle_time\">\n                  <div class=\"tittle\">\n                      <h3>".concat(recipes[i].name, "</h3>\n                  </div>\n                  <div class=\"time\">\n                      <i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i>\n                      <p>").concat(recipes[i].time, " min</p>\n                  </div>\n\n              </div>\n\n              <div class=\"ingredient_demo\">\n                  <div class=\"ingredient\"> \n                    <p> ").concat(textIngre, " </p>  \n                  </div>\n                  <div class=\"demo\">\n                  ").concat(recipes[i].description, "\n                  </div>\n              </div>\n          </div>\n      </div>\n      ");
-        };
+              if (ingred.quantity != undefined) {
+                textIngre = textIngre + "" + ingred.quantity;
+              }
 
-        for (i = 0; i < recipes.length; i++) {
-          _loop3();
-        }
-      }
-
-      newFuntion(); //----------------function-----extraireIngredien----------------------------
-
-      function extraireIngredien() {
-        for (i = 0; i < recipes.length; i++) {
-          var ArrayIngredients = [];
-          var ingredients = recipes[i].ingredients;
-
-          for (var a = 0; a < ingredients.length; a++) {
-            var ingredInner = ingredients[a].ingredient;
-            ArrayIngredients.push(ingredInner.toLowerCase());
-            AllIngredient.push(ingredInner.toLowerCase());
-
-            if (ArrayRecipes[ArrayRecipes.length - 1].id != recipes[i].id) {
-              ArrayRecipes.push({
-                id: recipes[i].id,
-                ingredient: ArrayIngredients
-              });
-            }
-          }
-        }
-      }
-
-      extraireIngredien(); //-----------------suppresion des elements dupliquer--------------------
-
-      function deleteduplication() {
-        AllIngredientNondupliquate = _toConsumableArray(new Set(AllIngredient));
-        AllIngredientNondupliquate.forEach(function (AllIngredientNondupliquateForEach) {
-          // Créez un élément p avec une classe "para1"
-          var paraElement = document.createElement("p");
-          paraElement.className = "para1";
-          paraElement.textContent = AllIngredientNondupliquateForEach; // Ajoutez l'élément à la variable elementsPara1
-
-          elementsPara1.push(paraElement); // Ajoutez l'élément à containt_info[0]
-
-          containt_info[0].appendChild(paraElement);
-        });
-      }
-
-      deleteduplication(); //-----------------affichage des blocs de recherche--------------------
-
-      var AllId = [{
-        element: "X",
-        ids: []
-      }];
-      elementsPara1.map(function (item) {
-        var mesPara = item;
-        mesPara.addEventListener("click", function (e) {
-          section.innerHTML = "";
-          var element = e.target.lastChild.textContent;
-          afficheClickIng.innerHTML += "\n            <div class=\"containeAffiche2\" style=\"background-color: #3282f7\">\n            <p class=\"text\">".concat(element, "</p>\n            <i class=\"fa fa-times close\" aria-hidden=\"true\"></i>\n            </div>\n            "); //-------------------recherche- avec le click---------------------
-
-          var AllTheIdFor = [];
-          var result = ArrayRecipes.filter(function (item) {
-            var thisId = item.id;
-
-            var ingredients = _toConsumableArray(new Set(item.ingredient));
-
-            ingredients.forEach(function (Ingr) {
-              if (element == Ingr) {
-                AllTheIdFor.push(thisId);
-
-                if (AllId[AllId.length - 1].element != element) {
-                  AllId.push({
-                    element: element,
-                    ids: AllTheIdFor
-                  });
-                } //---les id que je doit afficher---
-
-
-                AllIdtoDisplays.push(thisId);
+              if (ingred.unit != undefined) {
+                textIngre = textIngre + " " + ingred.unit + "<br/>";
               }
             });
+            section.innerHTML += "\n      <div class=\"containerAll\">\n          <div class=\"imgNone\"></div>\n          <div class=\"lesInfos\">\n              <div class=\"tittle_time\">\n                  <div class=\"tittle\">\n                      <h3>".concat(recipes[i].name, "</h3>\n                  </div>\n                  <div class=\"time\">\n                      <i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i>\n                      <p>").concat(recipes[i].time, " min</p>\n                  </div>\n\n              </div>\n\n              <div class=\"ingredient_demo\">\n                  <div class=\"ingredient\"> \n                    <p> ").concat(textIngre, " </p>  \n                  </div>\n                  <div class=\"demo\">\n                  ").concat(recipes[i].description, "\n                  </div>\n              </div>\n          </div>\n      </div>\n      ");
+          };
+
+          for (i = 0; i < recipes.length; i++) {
+            _loop3();
+          }
+        }
+
+        newFuntion(); // Fonction pour extraire les ingrédients appareils et ustensil uniques--
+
+        function extractIngredientsAndAppareilsAndUstensil() {
+          recipes.forEach(function (recipe) {
+            var tableauxIngredients = [];
+            var ingredients = recipe.ingredients;
+
+            for (var a = 0; a < ingredients.length; a++) {
+              var ingredientName = ingredients[a].ingredient;
+              tableauxIngredients.push(ingredientName.toLowerCase());
+              AllIngredient.push(ingredientName.toLowerCase());
+
+              if (ArrayIngredient[ArrayIngredient.length - 1].id != recipe.id) {
+                ArrayIngredient.push({
+                  id: recipe.id,
+                  ingredient: tableauxIngredients
+                });
+              }
+            } //--------------------appareil------------------
+
+
+            var appareilName = recipe.appliance.toLowerCase();
+            var tableauxAppareil = [];
+            AllAppareil.push(appareilName.toLowerCase());
+            tableauxAppareil.push(appareilName.toLowerCase());
+
+            if (ArrayAppareil[ArrayAppareil.length - 1].id != recipe.id) {
+              ArrayAppareil.push({
+                id: recipe.id,
+                appareil: tableauxAppareil
+              });
+            } //---------------------ustensil----------------------
+
+
+            var ustensiles = recipe.ustensils;
+            var tableauxUstensil = [];
+
+            for (var _a = 0; _a < ustensiles.length; _a++) {
+              AllUstensiles.push(ustensiles[_a].toLowerCase());
+              tableauxUstensil.push(ustensiles[_a].toLowerCase());
+
+              if (ArrayUstensiles[ArrayUstensiles.length - 1].id != recipe.id) {
+                ArrayUstensiles.push({
+                  id: recipe.id,
+                  ustensiles: tableauxUstensil
+                });
+              }
+            }
           });
-          console.log(AllIdtoDisplays); //--------------stocke les duplications------------
+        }
+
+        extractIngredientsAndAppareilsAndUstensil(); // Fonction pour afficher les éléments uniques dans les blocs de recherche--
+
+        function displayUniqueElements() {
+          function createParaElement(className, textContent) {
+            var paraElement = document.createElement("p");
+            paraElement.className = className;
+            paraElement.textContent = textContent;
+            return paraElement;
+          }
+
+          function addElementToContainer(element, container) {
+            elementsPara1.push(element);
+            containt_info[0].appendChild(element);
+          }
+
+          function addAppareilToContainer(element, container) {
+            elementsPara2.push(element);
+            containt_info[1].appendChild(element);
+          }
+
+          function addUstensilToContainer(element, container) {
+            elementsPara3.push(element);
+            containt_info[2].appendChild(element);
+          }
+
+          var AllIngredientNondupliquate = _toConsumableArray(new Set(AllIngredient));
+
+          var AllAppareilNondupliquate = _toConsumableArray(new Set(AllAppareil));
+
+          var AllUstensilesNondupliquate = _toConsumableArray(new Set(AllUstensiles));
+
+          AllIngredientNondupliquate.forEach(function (item) {
+            var paraElement = createParaElement("para1", item);
+            addElementToContainer(paraElement, containt_info[0]);
+          });
+          AllAppareilNondupliquate.forEach(function (item) {
+            var paraElement = createParaElement("para2", item);
+            addAppareilToContainer(paraElement, containt_info[1]);
+          });
+          AllUstensilesNondupliquate.forEach(function (item) {
+            var paraElement = createParaElement("para3", item);
+            addUstensilToContainer(paraElement, containt_info[2]);
+          });
+        }
+
+        displayUniqueElements(); // Fonction pour rechercher et afficher les résultats en fonction de l'élément cliqué
+
+        function searchAndDisplayResults(element, index, elementsPara, type) {
+          section.innerHTML = "";
+          var elementText = element.textContent;
+
+          if (element.className == "para1") {
+            afficheClickIng.innerHTML += "\n            <div class=\"containeAffiche2\" style=\"background-color: #3282f7\">\n              <p class=\"text\">".concat(elementText, "</p>\n              <i class=\"fa fa-times close\" aria-hidden=\"true\"></i>\n            </div>\n          ");
+            var AllTheIdFor = [];
+
+            var _result = ArrayIngredient.filter(function (item) {
+              var thisId = item.id;
+
+              var ingredients = _toConsumableArray(new Set(item.ingredient));
+
+              ingredients.forEach(function (Ingr) {
+                if (elementText == Ingr) {
+                  AllTheIdFor.push(thisId); //---les id que je doit afficher---
+
+                  AllIdtoDisplays.push(thisId);
+                }
+              });
+            });
+          } else if (element.className == "para2") {
+            afficheClickIng.innerHTML += "\n            <div class=\"containeAffiche2\" style=\"background-color: #68d9a4\">\n              <p class=\"text\">".concat(elementText, "</p>\n              <i class=\"fa fa-times close\" aria-hidden=\"true\"></i>\n            </div>\n          ");
+            var _AllTheIdFor = [];
+
+            var _result2 = ArrayAppareil.filter(function (item) {
+              var thisId = item.id;
+
+              var Appareil = _toConsumableArray(new Set(item.appareil));
+
+              Appareil.forEach(function (App) {
+                if (elementText == App) {
+                  _AllTheIdFor.push(thisId); //----------les id que je doit afficher-----------
+
+
+                  AllIdtoDisplays.push(thisId);
+                }
+              });
+            });
+          } else if (element.className == "para3") {
+            afficheClickIng.innerHTML += "\n            <div class=\"containeAffiche2\" style=\"background-color: #ed6454\">\n              <p class=\"text\">".concat(elementText, "</p>\n              <i class=\"fa fa-times close\" aria-hidden=\"true\"></i>\n            </div>\n          ");
+            var _AllTheIdFor2 = [];
+
+            var _result3 = ArrayUstensiles.filter(function (item) {
+              var thisId = item.id;
+
+              var Ustensil = _toConsumableArray(new Set(item.ustensiles));
+
+              Ustensil.forEach(function (Usten) {
+                if (elementText == Usten) {
+                  _AllTheIdFor2.push(thisId); //---les id que je doit afficher---
+
+
+                  AllIdtoDisplays.push(thisId);
+                }
+              });
+            });
+          } // Recherche des résultats correspondant à l'élément cliqué
+          //console.log(AllIdtoDisplays);
+
+
+          function AfficheBlockResultat(ajout) {
+            var _loop4 = function _loop4() {
+              var ingredient = recipes[i].ingredients;
+              var textIngre = "";
+              ingredient.forEach(function (ingred) {
+                textIngre = textIngre + " " + ingred.ingredient + "    :";
+
+                if (ingred.quantity != undefined) {
+                  textIngre = textIngre + "" + ingred.quantity;
+                }
+
+                if (ingred.unit != undefined) {
+                  textIngre = textIngre + " " + ingred.unit + "<br/>";
+                }
+              });
+
+              if (ajout.includes(recipes[i].id)) {
+                section.innerHTML += "\n                          <div class=\"containerAll\">\n                              <div class=\"imgNone\"></div>\n                              <div class=\"lesInfos\">\n                                  <div class=\"tittle_time\">\n                                      <div class=\"tittle\">\n                                          <h3>".concat(recipes[i].name, "</h3>\n                                      </div>\n                                      <div class=\"time\">\n                                          <i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i>\n                                          <p>").concat(recipes[i].time, " min</p>\n                                      </div>\n                    \n                                  </div>\n                    \n                                  <div class=\"ingredient_demo\">\n                                      <div class=\"ingredient\"> \n                                        <p> ").concat(textIngre, " </p>  \n                                      </div>\n                                      <div class=\"demo\">\n                                      ").concat(recipes[i].description, "\n                                      </div>\n                                  </div>\n                              </div>\n                          </div>\n                          ");
+              }
+            };
+
+            for (i = 0; i < recipes.length; i++) {
+              _loop4();
+            }
+          } //
+          //--------------stocke les duplications et afficher------------
+
 
           function getElementsWithMultipleOccurrences(arr) {
             var occurrences = {}; // Compter les occurrences de chaque élément
@@ -178,65 +299,12 @@ fetch("http://127.0.0.1:5500/data/recipes.json").then(function (res) {
             return result;
           }
 
-          var duplicateElementa = getElementsWithMultipleOccurrences(AllIdtoDisplays); //------------delete dupplication des id-------
+          var duplicateElementa = getElementsWithMultipleOccurrences(AllIdtoDisplays); //console.log(duplicateElementa);
 
-          var AllIdtoDisplaysNotDupliquate = _toConsumableArray(new Set(AllIdtoDisplays));
-
-          section.innerHTML = ""; //-------afficher les resultats obtenu----------
-
-          function AfficheBlockResultat() {
-            var _loop4 = function _loop4() {
-              var ingredient = recipes[i].ingredients;
-              var textIngre = "";
-              ingredient.forEach(function (ingred) {
-                textIngre = textIngre + " " + ingred.ingredient + "    :";
-
-                if (ingred.quantity != undefined) {
-                  textIngre = textIngre + "" + ingred.quantity;
-                }
-
-                if (ingred.unit != undefined) {
-                  textIngre = textIngre + " " + ingred.unit + "<br/>";
-                }
-              });
-
-              if (AllIdtoDisplaysNotDupliquate.includes(recipes[i].id)) {
-                section.innerHTML += "\n                          <div class=\"containerAll\">\n                              <div class=\"imgNone\"></div>\n                              <div class=\"lesInfos\">\n                                  <div class=\"tittle_time\">\n                                      <div class=\"tittle\">\n                                          <h3>".concat(recipes[i].name, "</h3>\n                                      </div>\n                                      <div class=\"time\">\n                                          <i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i>\n                                          <p>").concat(recipes[i].time, " min</p>\n                                      </div>\n                    \n                                  </div>\n                    \n                                  <div class=\"ingredient_demo\">\n                                      <div class=\"ingredient\"> \n                                        <p> ").concat(textIngre, " </p>  \n                                      </div>\n                                      <div class=\"demo\">\n                                      ").concat(recipes[i].description, "\n                                      </div>\n                                  </div>\n                              </div>\n                          </div>\n                          ");
-              }
-            };
-
-            for (i = 0; i < recipes.length; i++) {
-              _loop4();
-            }
-          }
-
-          if (result == "") {
-            AfficheBlockResultat();
+          if (duplicateElementa == "") {
+            AfficheBlockResultat(AllIdtoDisplays);
           } else {
-            var _loop5 = function _loop5() {
-              var ingredient = recipes[i].ingredients;
-              var textIngre = "";
-              ingredient.forEach(function (ingred) {
-                textIngre = textIngre + " " + ingred.ingredient + "    :";
-
-                if (ingred.quantity != undefined) {
-                  textIngre = textIngre + "" + ingred.quantity;
-                }
-
-                if (ingred.unit != undefined) {
-                  textIngre = textIngre + " " + ingred.unit + "<br/>";
-                }
-              });
-
-              if (duplicateElementa.includes(recipes[i].id)) {
-                section.innerHTML += "\n                            <div class=\"containerAll\">\n                                <div class=\"imgNone\"></div>\n                                <div class=\"lesInfos\">\n                                    <div class=\"tittle_time\">\n                                        <div class=\"tittle\">\n                                <h3>".concat(recipes[i].name, "</h3>\n                                   </div>\n                                   <div class=\"time\">\n                                            <i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i>\n                                       <p>").concat(recipes[i].time, " min</p>\n                                   </div>\n                      \n                              </div>\n                      \n                              <div class=\"ingredient_demo\">\n                               <div class=\"ingredient\"> \n                                <p> ").concat(textIngre, " </p>  \n                                 </div>\n                             <div class=\"demo\">\n                          ").concat(recipes[i].description, "\n                         </div>\n                    </div>\n                </div>\n                </div>\n                ");
-              }
-            };
-
-            //console.log(duplicateElementa);
-            for (i = 0; i < recipes.length; i++) {
-              _loop5();
-            }
+            AfficheBlockResultat(duplicateElementa);
           } // -----------------Décochez tous les boutons de catégorie----------
 
 
@@ -244,13 +312,14 @@ fetch("http://127.0.0.1:5500/data/recipes.json").then(function (res) {
             var closes = document.querySelectorAll(".fa-times");
             closes.forEach(function (closes) {
               closes.addEventListener("click", function (e) {
+                //console.log(afficheClickIng.childElementCount);
                 var siblingElement = e.target.parentElement;
                 siblingElement.remove();
-                var siblingElementText = e.target.parentElement.firstChild.nextSibling.textContent; //section.innerHTML = "";
-                //------------les id qu'on doit delete----------------
+                var siblingElementText = e.target.parentElement.firstChild.nextSibling.textContent; //------------les id qu'on doit delete----------------
 
-                var IdYToDelete = [];
-                var result = ArrayRecipes.filter(function (item) {
+                var IdYToDelete = []; //--------push delete id ingre-----
+
+                var result1 = ArrayIngredient.filter(function (item) {
                   var thisId = item.id;
 
                   var ingredients = _toConsumableArray(new Set(item.ingredient));
@@ -260,174 +329,52 @@ fetch("http://127.0.0.1:5500/data/recipes.json").then(function (res) {
                       IdYToDelete.push(thisId);
                     }
                   });
+                }); //--------push delete id appareil-----
+
+                var result2 = ArrayAppareil.filter(function (item) {
+                  var thisId = item.id;
+
+                  var Appareil = _toConsumableArray(new Set(item.appareil));
+
+                  Appareil.forEach(function (App) {
+                    if (siblingElementText == App) {
+                      IdYToDelete.push(thisId);
+                    }
+                  });
+                }); //--------push delete id usten-----
+
+                var result3 = ArrayUstensiles.filter(function (item) {
+                  var thisId = item.id;
+
+                  var Ustensil = _toConsumableArray(new Set(item.ustensiles));
+
+                  Ustensil.forEach(function (Usten) {
+                    if (siblingElementText == Usten) {
+                      IdYToDelete.push(thisId);
+                    }
+                  });
                 });
                 IdYToDelete.forEach(function (IdYToDeleteUss) {
-                  AllIdtoDisplays.pop(IdYToDeleteUss);
-
-                  if (afficheClickIng.children.length == 1) {
-                    section.innerHTML = "";
-                    console.log(AllIdtoDisplays);
-
-                    var _loop6 = function _loop6() {
-                      var ingredient = recipes[i].ingredients;
-                      var textIngre = "";
-                      ingredient.forEach(function (ingred) {
-                        textIngre = textIngre + " " + ingred.ingredient + "    :";
-
-                        if (ingred.quantity != undefined) {
-                          textIngre = textIngre + "" + ingred.quantity;
-                        }
-
-                        if (ingred.unit != undefined) {
-                          textIngre = textIngre + " " + ingred.unit + "<br/>";
-                        }
-                      });
-
-                      if (AllIdtoDisplays.includes(recipes[i].id)) {
-                        section.innerHTML += "\n                                  <div class=\"containerAll\">\n                                      <div class=\"imgNone\"></div>\n                                      <div class=\"lesInfos\">\n                                          <div class=\"tittle_time\">\n                                              <div class=\"tittle\">\n                                                  <h3>".concat(recipes[i].name, "</h3>\n                                              </div>\n                                              <div class=\"time\">\n                                                  <i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i>\n                                                  <p>").concat(recipes[i].time, " min</p>\n                                              </div>\n                            \n                                          </div>\n                            \n                                          <div class=\"ingredient_demo\">\n                                              <div class=\"ingredient\"> \n                                                <p> ").concat(textIngre, " </p>  \n                                              </div>\n                                              <div class=\"demo\">\n                                  ").concat(recipes[i].description, "\n                                </div>\n                             </div>\n                           </div>\n                         </div>\n                     ");
-                      }
-                    };
-
-                    for (i = 0; i < recipes.length; i++) {
-                      _loop6();
-                    }
-                  } //----function DisplayduplicateElementaAfterDelete---------
-
-
                   function DisplayduplicateElementaAfterDelete() {
                     duplicateElementa.filter(function (item) {
                       if (IdYToDeleteUss == item) {
                         duplicateElementa.pop(IdYToDeleteUss);
-                        console.log(duplicateElementa);
-
-                        if (afficheClickIng.children.length > 1) {
-                          section.innerHTML = "";
-
-                          var _loop7 = function _loop7() {
-                            var ingredient = recipes[i].ingredients;
-                            var textIngre = "";
-                            ingredient.forEach(function (ingred) {
-                              textIngre = textIngre + " " + ingred.ingredient + "    :";
-
-                              if (ingred.quantity != undefined) {
-                                textIngre = textIngre + "" + ingred.quantity;
-                              }
-
-                              if (ingred.unit != undefined) {
-                                textIngre = textIngre + " " + ingred.unit + "<br/>";
-                              }
-                            });
-
-                            if (duplicateElementa.includes(recipes[i].id)) {
-                              section.innerHTML += "\n                                        <div class=\"containerAll\">\n                                            <div class=\"imgNone\"></div>\n                                            <div class=\"lesInfos\">\n                                                <div class=\"tittle_time\">\n                                                    <div class=\"tittle\">\n                                                        <h3>".concat(recipes[i].name, "</h3>\n                                                    </div>\n                                                    <div class=\"time\">\n                                                        <i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i>\n                                                        <p>").concat(recipes[i].time, " min</p>\n                                                    </div>\n                                  \n                                                </div>\n                                  \n                                                <div class=\"ingredient_demo\">\n                                                    <div class=\"ingredient\"> \n                                                      <p> ").concat(textIngre, " </p>  \n                                                    </div>\n                                                    <div class=\"demo\">\n                                        ").concat(recipes[i].description, "\n                                      </div>\n                                   </div>\n                                 </div>\n                               </div>\n                           ");
-                            }
-                          };
-
-                          for (i = 0; i < recipes.length; i++) {
-                            _loop7();
-                          }
-                        } //else {
-                        //   AllIdtoDisplays.pop(IdYToDeleteUss);
-                        //   // console.log(AllIdtoDisplays);
-                        //   for (i = 0; i < recipes.length; i++) {
-                        //     let ingredient = recipes[i].ingredients;
-                        //     let textIngre = "";
-                        //     ingredient.forEach((ingred) => {
-                        //       textIngre =
-                        //         textIngre + " " + ingred.ingredient + "    :";
-                        //       if (ingred.quantity != undefined) {
-                        //         textIngre = textIngre + "" + ingred.quantity;
-                        //       }
-                        //       if (ingred.unit != undefined) {
-                        //         textIngre =
-                        //           textIngre + " " + ingred.unit + "<br/>";
-                        //       }
-                        //     });
-                        //     if (AllIdtoDisplays.includes(recipes[i].id)) {
-                        //       section.innerHTML += `
-                        //                 <div class="containerAll">
-                        //                     <div class="imgNone"></div>
-                        //                     <div class="lesInfos">
-                        //                         <div class="tittle_time">
-                        //                             <div class="tittle">
-                        //                                 <h3>${recipes[i].name}</h3>
-                        //                             </div>
-                        //                             <div class="time">
-                        //                                 <i class="fa fa-clock-o" aria-hidden="true"></i>
-                        //                                 <p>${recipes[i].time} min</p>
-                        //                             </div>
-                        //                         </div>
-                        //                         <div class="ingredient_demo">
-                        //                             <div class="ingredient">
-                        //                               <p> ${textIngre} </p>
-                        //                             </div>
-                        //                             <div class="demo">
-                        //                             ${recipes[i].description}
-                        //                             </div>
-                        //                         </div>
-                        //                     </div>
-                        //                 </div>
-                        //                 `;
-                        //     }
-                        //   }
-                        // }
-
+                        section.innerHTML = "";
+                        AfficheBlockResultat(duplicateElementa); //console.log(duplicateElementa);
                       }
                     });
-                  } //----function DisplayAllIdtoDisplaysAfterDelete---------
-                  // function DisplayAllIdtoDisplaysAfterDelete() {
-                  // if (afficheClickIng.children.length == 1) {
-                  //   AllIdtoDisplays.pop(IdYToDeleteUss);
-                  //   section.innerHTML = "";
-                  //   console.log(AllIdtoDisplays);
-                  //   for (i = 0; i < recipes.length; i++) {
-                  //     let ingredient = recipes[i].ingredients;
-                  //     let textIngre = "";
-                  //     ingredient.forEach((ingred) => {
-                  //       textIngre =
-                  //         textIngre + " " + ingred.ingredient + "    :";
-                  //       if (ingred.quantity != undefined) {
-                  //         textIngre = textIngre + "" + ingred.quantity;
-                  //       }
-                  //       if (ingred.unit != undefined) {
-                  //         textIngre = textIngre + " " + ingred.unit + "<br/>";
-                  //       }
-                  //     });
-                  //     if (AllIdtoDisplays.includes(recipes[i].id)) {
-                  //       section.innerHTML += `
-                  //                 <div class="containerAll">
-                  //                     <div class="imgNone"></div>
-                  //                     <div class="lesInfos">
-                  //                         <div class="tittle_time">
-                  //                             <div class="tittle">
-                  //                                 <h3>${recipes[i].name}</h3>
-                  //                             </div>
-                  //                             <div class="time">
-                  //                                 <i class="fa fa-clock-o" aria-hidden="true"></i>
-                  //                                 <p>${recipes[i].time} min</p>
-                  //                             </div>
-                  //                         </div>
-                  //                         <div class="ingredient_demo">
-                  //                             <div class="ingredient">
-                  //                               <p> ${textIngre} </p>
-                  //                             </div>
-                  //                             <div class="demo">
-                  //                 ${recipes[i].description}
-                  //               </div>
-                  //            </div>
-                  //          </div>
-                  //        </div>
-                  //    `;
-                  //     }
-                  //   }
-                  // }
-                  //  }
+                  }
 
+                  DisplayduplicateElementaAfterDelete(); //----------------si duplicate est vide----------------
 
-                  DisplayduplicateElementaAfterDelete(); // DisplayAllIdtoDisplaysAfterDelete();
+                  AllIdtoDisplays.pop(IdYToDeleteUss);
 
-                  if (AllIdtoDisplays == "") {
-                    return newFuntion();
+                  if (afficheClickIng.childElementCount == 1) {
+                    section.innerHTML = "";
+                    AfficheBlockResultat(AllIdtoDisplays);
+                  } else if (AllIdtoDisplays == "") {
+                    section.innerHTML = "";
+                    newFuntion();
                   }
                 });
               });
@@ -435,9 +382,29 @@ fetch("http://127.0.0.1:5500/data/recipes.json").then(function (res) {
           }
 
           decocherSearch();
-        }); //-----------
-      }); //-------------------------------------
-      //----------------------------------
-    }); //---fin fetch
-  }
-});
+        } // Gestion du clic sur les éléments d'ingrédient
+
+
+        elementsPara1.forEach(function (element, index) {
+          element.addEventListener("click", function () {
+            searchAndDisplayResults(element, index, elementsPara1, "ingredient");
+          });
+        }); // Gestion du clic sur les éléments d'appareil
+
+        elementsPara2.forEach(function (element, index) {
+          element.addEventListener("click", function () {
+            searchAndDisplayResults(element, index, elementsPara2, "appareil");
+          });
+        }); // Gestion du clic sur les éléments d'ustensil
+
+        elementsPara3.forEach(function (element, index) {
+          element.addEventListener("click", function () {
+            searchAndDisplayResults(element, index, elementsPara3, "ustensil");
+          });
+        });
+      });
+    }
+  });
+}
+
+fetchRecipes();
