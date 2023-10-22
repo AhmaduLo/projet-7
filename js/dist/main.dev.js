@@ -167,7 +167,8 @@ function fetchRecipes() {
           function addUstensilToContainer(element, container) {
             elementsPara3.push(element);
             containt_info[2].appendChild(element);
-          }
+          } //--------------supression des duplication----
+
 
           var AllIngredientNondupliquate = _toConsumableArray(new Set(AllIngredient));
 

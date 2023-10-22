@@ -3,6 +3,7 @@ const InputShe = document.querySelectorAll(".InputShe");
 const InputShe2 = document.querySelectorAll(".InputShe2");
 const InputShe3 = document.querySelectorAll(".InputShe3");
 const containerInfo = document.querySelectorAll(".containt_info");
+const nav = document.querySelector("nav");
 
 //------------------barre de recherche superieur--------------------------
 
@@ -14,37 +15,77 @@ inputSearch.addEventListener("input", (e) => {
 
 function Filter(valueInput, containerAll) {
   if (valueInput.length > 2) {
+    section.innerHTML = "";
+
     for (let i = 0; i < containerAll.length; i++) {
       if (containerAll[i].textContent.toLowerCase().includes(valueInput)) {
-        containerAll[i].style.display = "block";
+        nav.appendChild(containerAll[i].cloneNode(true));
       } else {
         containerAll[i].style.display = "none";
       }
     }
+    //----------------------------------
+    for (let i = 0; i < nav.children.length; i++) {
+      const child = nav.children[i];
+      let shouldDisplay = false; // Initialize as false
+
+      //-------------partie ingredien---------------------
+      for (let j = 0; j < elementsPara1.length; j++) {
+        if (child.innerText.includes(elementsPara1[j].textContent)) {
+          shouldDisplay = true; // If a match is found, set to true and break out of the loop
+          //break;
+          elementsPara1[j].style.display = "block";
+        }else{
+          elementsPara1[j].style.display = "none";
+        }
+      }
+       //-------------partie appareil---------------------
+       for (let j = 0; j < elementsPara2.length; j++) {
+        if (child.innerText.includes(elementsPara2[j].textContent)) {
+          shouldDisplay = true; // If a match is found, set to true and break out of the loop
+          //break;
+          elementsPara2[j].style.display = "block";
+        }else{
+          elementsPara2[j].style.display = "none";
+        }
+      }
+      //-------------partie ustensil---------------------
+      for (let j = 0; j < elementsPara3.length; j++) {
+        if (child.innerText.includes(elementsPara3[j].textContent)) {
+          shouldDisplay = true; // If a match is found, set to true and break out of the loop
+          //break;
+          elementsPara3[j].style.display = "block";
+        }else{
+          elementsPara3[j].style.display = "none";
+        }
+      }
+    }
     //--------para1-------------------
-    for (let i = 0; i < elementsPara1.length; i++) {
-      if (elementsPara1[i].textContent.toLowerCase().includes(valueInput)) {
-        elementsPara1[i].style.display = "block";
-      } else {
-        elementsPara1[i].style.display = "none";
-      }
-    }
-    //--------para2-------------------
-    for (let i = 0; i < elementsPara2.length; i++) {
-      if (elementsPara2[i].textContent.toLowerCase().includes(valueInput)) {
-        elementsPara2[i].style.display = "block";
-      } else {
-        elementsPara2[i].style.display = "none";
-      }
-    }
-    //--------para3-------------------
-    for (let i = 0; i < elementsPara3.length; i++) {
-      if (elementsPara3[i].textContent.toLowerCase().includes(valueInput)) {
-        elementsPara3[i].style.display = "block";
-      } else {
-        elementsPara3[i].style.display = "none";
-      }
-    }
+    // for (let i = 0; i < elementsPara1.length; i++) {
+    //   console.log(nav.children[0].innerText);
+    //   if (elementsPara1[i].textContent.includes(containerAll[i])) {
+    //     //elementsPara1[i].style.display = "block";
+    //     console.log(elementsPara1[i]);
+    //   } else {
+    //     elementsPara1[i].style.display = "none";
+    //   }
+    // }
+    // //--------para2-------------------
+    // for (let i = 0; i < elementsPara2.length; i++) {
+    //   if (elementsPara2[i].textContent.toLowerCase().includes(valueInput)) {
+    //     elementsPara2[i].style.display = "block";
+    //   } else {
+    //     elementsPara2[i].style.display = "none";
+    //   }
+    // }
+    // //--------para3-------------------
+    // for (let i = 0; i < elementsPara3.length; i++) {
+    //   if (elementsPara3[i].textContent.toLowerCase().includes(valueInput)) {
+    //     elementsPara3[i].style.display = "block";
+    //   } else {
+    //     elementsPara3[i].style.display = "none";
+    //   }
+    // }
   } else if (valueInput.length == 0) {
     location.reload();
   }

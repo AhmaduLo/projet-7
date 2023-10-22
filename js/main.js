@@ -156,12 +156,14 @@ function fetchRecipes() {
             elementsPara3.push(element);
             containt_info[2].appendChild(element);
           }
+          //--------------supression des duplication----
           let AllIngredientNondupliquate = [...new Set(AllIngredient)];
           let AllAppareilNondupliquate = [...new Set(AllAppareil)];
           let AllUstensilesNondupliquate = [...new Set(AllUstensiles)];
           AllIngredientNondupliquate.forEach((item) => {
             const paraElement = createParaElement("para1", item);
             addElementToContainer(paraElement, containt_info[0]);
+            
           });
 
           AllAppareilNondupliquate.forEach((item) => {
