@@ -16,16 +16,18 @@ inputSearch.addEventListener("input", function (e) {
 function Filter(valueInput, containerAll) {
   if (valueInput.length > 2) {
     section.innerHTML = "";
-    containerAll.forEach(function (item) {
-      if (item.textContent.toLowerCase().includes(valueInput)) {
-        nav.appendChild(item.cloneNode(true));
-      } else {
-        item.style.display = "none";
-      }
-    });
 
-    for (var i = 0; i < nav.children.length; i++) {
-      var child = nav.children[i];
+    for (var i = 0; i < containerAll.length; i++) {
+      if (containerAll[i].textContent.toLowerCase().includes(valueInput)) {
+        nav.appendChild(containerAll[i].cloneNode(true));
+      } else {
+        containerAll[i].style.display = "none";
+      }
+    } //----------------------------------
+
+
+    for (var _i = 0; _i < nav.children.length; _i++) {
+      var child = nav.children[_i];
       var shouldDisplay = false; // Initialize as false
       //-------------partie ingredien---------------------
 
