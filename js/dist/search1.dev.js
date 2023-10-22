@@ -65,33 +65,7 @@ function Filter(valueInput, containerAll) {
           elementsPara3[_j2].style.display = "none";
         }
       }
-    } //--------para1-------------------
-    // for (let i = 0; i < elementsPara1.length; i++) {
-    //   console.log(nav.children[0].innerText);
-    //   if (elementsPara1[i].textContent.includes(containerAll[i])) {
-    //     //elementsPara1[i].style.display = "block";
-    //     console.log(elementsPara1[i]);
-    //   } else {
-    //     elementsPara1[i].style.display = "none";
-    //   }
-    // }
-    // //--------para2-------------------
-    // for (let i = 0; i < elementsPara2.length; i++) {
-    //   if (elementsPara2[i].textContent.toLowerCase().includes(valueInput)) {
-    //     elementsPara2[i].style.display = "block";
-    //   } else {
-    //     elementsPara2[i].style.display = "none";
-    //   }
-    // }
-    // //--------para3-------------------
-    // for (let i = 0; i < elementsPara3.length; i++) {
-    //   if (elementsPara3[i].textContent.toLowerCase().includes(valueInput)) {
-    //     elementsPara3[i].style.display = "block";
-    //   } else {
-    //     elementsPara3[i].style.display = "none";
-    //   }
-    // }
-
+    }
   } else if (valueInput.length == 0) {
     location.reload();
   }
